@@ -1,0 +1,8 @@
+DirectoryIndex index.php
+RewriteEngine On
+
+RewriteRule ^([^.]+)/([a-z]+)/([0-9]+)$ index.php?page=$1&subpage=$2&subdata=$3 [L]
+RewriteRule ^([^.]+)/([a-z]+)$ index.php?page=$1&subpage=$2 [L]
+RewriteRule ^([^.]+)/([0-9]+)$ index.php?page=$1&subdata=$2 [L]
+
+RewriteRule ^([^.]+)$ /index.php?page=$1 [L]
