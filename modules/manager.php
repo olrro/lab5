@@ -8,36 +8,6 @@
 =====================================================
 */
 
-#Изменение режима работы редактора объектов (1 = преподаватель, 0 = студент)
-if ( isset( $_POST['editor_type'] ) ) {
-
-  if ( intval( $_POST['editor_type'] ) ) {
-    $editor_mode = 1;
-  }
-  else {
-    $editor_mode = 0;
-  }
-
-  #Режим работы храниться в куках пользователя
-  setcookie( 'editor_mode', $editor_mode, time() + ( 60 * 60 * 24 ) );
-  header( 'Location: /manager/editor' );
-
-  exit();
-
-}
-else {
-
-  #Если куки нет - будет создана новая
-  if ( isset( $_COOKIE['editor_mode'] ) ) {
-    $editor_mode = intval( $_COOKIE['editor_mode'] );
-  }
-  else {
-    setcookie( 'editor_mode', '1', time() + ( 60 * 60 * 24 ) );
-    $editor_mode = 1;
-  }
-
-}
-
 #Если пользователь авторизован - выводим панель управления
 if ( isset( $_SESSION['logged_user'] ) ) {
 
@@ -46,6 +16,36 @@ if ( isset( $_SESSION['logged_user'] ) ) {
     switch ( $system['subpage'] ) {
 
       case 'editor':
+
+        #Изменение режима работы редактора объектов (1 = преподаватель, 0 = студент)
+        if ( isset( $_POST['editor_type'] ) ) {
+
+          if ( intval( $_POST['editor_type'] ) ) {
+            $editor_mode = 1;
+          }
+          else {
+            $editor_mode = 0;
+          }
+
+          #Режим работы храниться в куках пользователя
+          setcookie( 'editor_mode', $editor_mode, time() + ( 60 * 60 * 24 ) );
+          header( 'Location: /manager/editor' );
+
+          exit();
+
+        }
+        else {
+
+          #Если куки нет - будет создана новая
+          if ( isset( $_COOKIE['editor_mode'] ) ) {
+            $editor_mode = intval( $_COOKIE['editor_mode'] );
+          }
+          else {
+            setcookie( 'editor_mode', '1', time() + ( 60 * 60 * 24 ) );
+            $editor_mode = 1;
+          }
+
+        }
 
         $query = 'SELECT * FROM ' . ( $editor_mode ? 'teachers' : 'students' );
 

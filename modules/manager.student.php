@@ -60,7 +60,7 @@ elseif ( isset( $_POST['name'] ) ) {
     $error = 1;
   }
   else {
-    $params['name'] = preg_replace('/\s+/', ' ', $_POST['name'] );
+    $params['name'] = preg_replace('/\s+/u', ' ', $_POST['name'] );
   }
 
   if ( intval( $_POST['gender'] ) > 1 OR intval( $_POST['gender'] ) < 0 ) {

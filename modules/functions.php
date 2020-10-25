@@ -36,12 +36,12 @@ function returnGender( $gender )
 function returnPopUpProfile()
 {
 
-  global $user_data;
+  global $system;
 
   if (isset( $_SESSION['logged_user'] ) ) {
 
     $tpl = new Template;
-    return $tpl->load( 'user.tpl' )->set( '{username}', $user_data['login'] )->compile();
+    return $tpl->load( 'user.tpl' )->set( '{username}', $system['user_data']['login'] )->compile();
 
   }
   else return '<a class="btn btn-primary" href="/login">Войти</a>';

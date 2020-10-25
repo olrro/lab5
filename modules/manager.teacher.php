@@ -60,14 +60,14 @@ elseif ( isset( $_POST['name'] ) ) {
     $error = 1;
   }
   else {
-    $params['name'] = preg_replace('/\s+/', ' ', $_POST['name'] );
+    $params['name'] = preg_replace('/\s+/u', ' ', $_POST['name'] );
   }
 
   if ( !preg_match( '/^[а-яА-ЯЁёA-Za-z0-9\s.,]+$/iu', $_POST['bio'] ) OR mb_strlen( $_POST['bio'] ) > 2000 OR mb_strlen( trim( $_POST['bio'] ) ) < 5 ) {
     $error = 1;
   }
   else {
-    $params['bio'] = preg_replace('/\s+/', ' ', $_POST['bio'] );
+    $params['bio'] = preg_replace('/\s+/u', ' ', $_POST['bio'] );
   }
 
   if ( !isset( $_POST['photoban'] ) ) {

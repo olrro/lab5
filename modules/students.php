@@ -11,12 +11,10 @@
 #Если отправлена подстраница - выводим профиль студента
 if ( isset( $system['subdata'] ) ) {
 
-  $query = $database->prepare( 'SELECT * FROM students WHERE id = :id' );
-  $query->execute( ['id' => intval( $system['subdata'] )] );
+  $query = $database->prepare( 'SELECT * FROM students WHERE id = ?' );
+  $query->execute( [ intval( $system['subdata'] ) ] );
 
-  $row = $query->fetch();
-
-  if ( $row['id'] ) {
+  if ( $row = $query->fetch() ) {
 
     $tpl = new Template;
 
@@ -45,7 +43,7 @@ if ( isset( $system['subdata'] ) ) {
 
 }
 else {
-  
+
   #Если подстраница не отправлена - выводим список студентов
   $tpl = new Template;
   $page = $tpl->load('students.tpl')->compile();

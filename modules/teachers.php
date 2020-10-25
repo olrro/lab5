@@ -55,8 +55,8 @@ else {
 
   $teacher_id = intval( $system['subdata'] );
 
-  $query = $database->prepare( 'SELECT * FROM teachers WHERE id = :id' );
-  $query->execute( ['id' => $teacher_id] );
+  $query = $database->prepare( 'SELECT * FROM teachers WHERE id = ?' );
+  $query->execute( [ $teacher_id ] );
 
   if ( $row = $query->fetch() ) {
 
@@ -71,8 +71,8 @@ else {
     ->set( '{experience}', yearSuffix( strtotime( $row['experience'] ) ) )
     ->set( '{foto}', '/template/images/database/' . $row['photo'] );
 
-    $query = $database->prepare( 'SELECT * FROM students WHERE teacher_id = :id' );
-    $query->execute( ['id' => $teacher_id] );
+    $query = $database->prepare( 'SELECT * FROM students WHERE teacher_id = ?' );
+    $query->execute( [ $teacher_id ] );
 
     $results = [];
 

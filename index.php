@@ -8,7 +8,8 @@
 =====================================================
 */
 
-error_reporting(1);
+#Выключаем оповещения об ошибках
+error_reporting( 0 );
 
 date_default_timezone_set ( 'Europe/Moscow' );
 
@@ -24,18 +25,26 @@ require ROOT_DIR . '/classes/template.class.php';
 # Начинаем сессию
 session_start();
 
+$system = [];
+
 # Проверяем авторизован ли пользователь и выдергиваем информацию о нем из базы
 if ( isset( $_SESSION['logged_user'] ) ) {
 
-    $user_data = $database->prepare( 'SELECT * FROM users WHERE id = :id' );
-    $user_data->execute([ 'id' => intval( $_SESSION['logged_user'] ) ]);
-    $user_data = $user_data->fetch();
+    $query = $database->prepare( 'SELECT * FROM users WHERE id = ?' );
+    $query->execute( [ intval( $_SESSION['logged_user'] ) ] );
+
+    if ( !$system['user_data'] = $query->fetch() ) {
+      unset( $_SESSION['logged_user'] );
+    }
 
 }
 
-$system = [];
-
-$system['page'] = $_GET['page'];
+if ( isset( $_GET['page'] ) ) {
+  $system['page'] = $_GET['page'];
+}
+else {
+  $system['page'] = '';
+}
 
 if ( isset( $_GET['subdata'] ) ) {
   $system['subdata'] = $_GET['subdata'];
